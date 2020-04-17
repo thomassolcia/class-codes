@@ -4,52 +4,549 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
 
-st.title('Aula do dia 09/04')
+st.title('Atividade dia 16/04')
 
-image = Image.open('monte_fuji.jpg')
+num_color = st.selectbox("Quantas cores?", \
+    (2, 4, 8, 16, 32, 64, 128))
+
+image = Image.open('unsplash.jpg')
 imagem_color_arr = np.array(image)
 img_gray = np.mean(imagem_color_arr, axis=2)
-
-limiar64 = st.slider('Limiar 1?', 0, 64, 50)
-limiar128 = st.slider('Limiar 2?', 64, 128, 100)
-limiar192 = st.slider('Limiar 3?', 128, 192, 150)
-limiar255 = st.slider('Limiar 4?', 192, 255, 200)
-
+st.text(img_gray.shape)
 img_gray = np.mean(imagem_color_arr, axis=2)
 
-img_gray[img_gray < limiar64] = 0
-img_gray[(img_gray < limiar128).all() and (img_gray > limiar64).all()] = 64
-img_gray[(img_gray < limiar192).all() and (img_gray > limiar128).all()] = 128
-img_gray[img_gray > limiar192] = 192
+if num_color == 2:
+    img_gray[img_gray < 127]  = 0
+    img_gray[img_gray >= 127]  = 255
+elif num_color == 4:
+    img_gray[img_gray < 64]  = 0
+    img_gray[(64 < img_gray) & (img_gray < 128)]  = 64
+    img_gray[(128 < img_gray) & (img_gray < 192)]  = 128
+    img_gray[img_gray > 192]  = 192
+elif num_color == 8:
+    img_gray[img_gray < 32]  = 0
+    img_gray[(32 < img_gray) & (img_gray < 64)]  = 32
+    img_gray[(64 < img_gray) & (img_gray < 96)]  = 64
+    img_gray[(96 < img_gray) & (img_gray < 128)]  = 96
+    img_gray[(128 < img_gray) & (img_gray < 160)]  = 128
+    img_gray[(160 < img_gray) & (img_gray < 192)]  = 160
+    img_gray[(192 < img_gray) & (img_gray < 224)]  = 192
+    img_gray[img_gray > 224] = 255
+elif num_color == 16:
+    img_gray[img_gray < 16]  = 0
+    img_gray[(16 < img_gray) & (img_gray < 32)]  = 16
+    img_gray[(32 < img_gray) & (img_gray < 48)]  = 32
+    img_gray[(48 < img_gray) & (img_gray < 64)]  = 48
+    img_gray[(64 < img_gray) & (img_gray < 80)]  = 64
+    img_gray[(80 < img_gray) & (img_gray < 96)]  = 80
+    img_gray[(96 < img_gray) & (img_gray < 112)]  = 96
+    img_gray[(112 < img_gray) & (img_gray < 128)]  = 112
+    img_gray[(128 < img_gray) & (img_gray < 144)]  = 128
+    img_gray[(144 < img_gray) & (img_gray < 160)]  = 144
+    img_gray[(160 < img_gray) & (img_gray < 176)]  = 160
+    img_gray[(176 < img_gray) & (img_gray < 192)]  = 176
+    img_gray[(192 < img_gray) & (img_gray < 208)]  = 192
+    img_gray[(208 < img_gray) & (img_gray < 224)]  = 208
+    img_gray[(224 < img_gray) & (img_gray < 240)]  = 224
+    img_gray[img_gray > 240]  = 255
+elif num_color == 32:
+    img_gray[img_gray < 8]  = 0
+    img_gray[(8 < img_gray) & (img_gray < 16)]  = 8
+    img_gray[(16 < img_gray) & (img_gray < 24)]  = 16
+    img_gray[(24 < img_gray) & (img_gray < 32)]  = 24
+    img_gray[(32 < img_gray) & (img_gray < 40)]  = 32
+    img_gray[(40 < img_gray) & (img_gray < 48)]  = 40
+    img_gray[(48 < img_gray) & (img_gray < 56)]  = 48
+    img_gray[(56 < img_gray) & (img_gray < 64)]  = 56
+    img_gray[(64 < img_gray) & (img_gray < 72)]  = 64
+    img_gray[(72 < img_gray) & (img_gray < 80)]  = 72
+    img_gray[(80 < img_gray) & (img_gray < 88)]  = 80
+    img_gray[(88 < img_gray) & (img_gray < 96)]  = 88
+    img_gray[(96 < img_gray) & (img_gray < 104)]  = 96
+    img_gray[(104 < img_gray) & (img_gray < 112)]  = 104
+    img_gray[(112 < img_gray) & (img_gray < 120)]  = 112
+    img_gray[(120 < img_gray) & (img_gray < 128)]  = 120
+    img_gray[(128 < img_gray) & (img_gray < 136)]  = 128
+    img_gray[(136 < img_gray) & (img_gray < 142)]  = 136
+    img_gray[(142 < img_gray) & (img_gray < 150)]  = 142
+    img_gray[(150 < img_gray) & (img_gray < 158)]  = 150
+    img_gray[(158 < img_gray) & (img_gray < 164)]  = 158
+    img_gray[(164 < img_gray) & (img_gray < 172)]  = 164
+    img_gray[(172 < img_gray) & (img_gray < 180)]  = 172
+    img_gray[(180 < img_gray) & (img_gray < 188)]  = 180
+    img_gray[(188 < img_gray) & (img_gray < 196)]  = 188
+    img_gray[(196 < img_gray) & (img_gray < 204)]  = 196
+    img_gray[(204 < img_gray) & (img_gray < 212)]  = 204
+    img_gray[(212 < img_gray) & (img_gray < 220)]  = 212
+    img_gray[(220 < img_gray) & (img_gray < 228)]  = 220
+    img_gray[(228 < img_gray) & (img_gray < 236)]  = 228
+    img_gray[(236 < img_gray) & (img_gray < 244)]  = 236
+    img_gray[img_gray > 244]  = 255
+elif num_color == 64:
+    img_gray[img_gray < 8]  = 0
+    img_gray[(4 < img_gray) & (img_gray < 8)]  = 4
+    img_gray[(8 < img_gray) & (img_gray < 12)]  = 8
+    img_gray[(12 < img_gray) & (img_gray < 16)]  = 12
+    img_gray[(16 < img_gray) & (img_gray < 20)]  = 16
+    img_gray[(20 < img_gray) & (img_gray < 24)]  = 20
+    img_gray[(24 < img_gray) & (img_gray < 28)]  = 24
+    img_gray[(28 < img_gray) & (img_gray < 32)]  = 28
+    img_gray[(32 < img_gray) & (img_gray < 36)]  = 32
+    img_gray[(36 < img_gray) & (img_gray < 40)]  = 36
+    img_gray[(40 < img_gray) & (img_gray < 44)]  = 40
+    img_gray[(44 < img_gray) & (img_gray < 48)]  = 44
+    img_gray[(48 < img_gray) & (img_gray < 52)]  = 48
+    img_gray[(52 < img_gray) & (img_gray < 56)]  = 52
+    img_gray[(56 < img_gray) & (img_gray < 60)]  = 56
+    img_gray[(60 < img_gray) & (img_gray < 64)]  = 60
+    img_gray[(64 < img_gray) & (img_gray < 68)]  = 64
+    img_gray[(68 < img_gray) & (img_gray < 72)]  = 68
+    img_gray[(72 < img_gray) & (img_gray < 76)]  = 72
+    img_gray[(76 < img_gray) & (img_gray < 80)]  = 76
+    img_gray[(80 < img_gray) & (img_gray < 84)]  = 80
+    img_gray[(84 < img_gray) & (img_gray < 88)]  = 84
+    img_gray[(88 < img_gray) & (img_gray < 92)]  = 88
+    img_gray[(92 < img_gray) & (img_gray < 96)]  = 92
+    img_gray[(96 < img_gray) & (img_gray < 100)]  = 96
+    img_gray[(100 < img_gray) & (img_gray < 104)]  = 100
+    img_gray[(104 < img_gray) & (img_gray < 108)]  = 104
+    img_gray[(108 < img_gray) & (img_gray < 112)]  = 108
+    img_gray[(112 < img_gray) & (img_gray < 116)]  = 112
+    img_gray[(116 < img_gray) & (img_gray < 120)]  = 116
+    img_gray[(120 < img_gray) & (img_gray < 124)]  = 120
+    img_gray[(124 < img_gray) & (img_gray < 128)]  = 124
+    img_gray[(128 < img_gray) & (img_gray < 132)]  = 128
+    img_gray[(132 < img_gray) & (img_gray < 136)]  = 132
+    img_gray[(136 < img_gray) & (img_gray < 140)]  = 136
+    img_gray[(140 < img_gray) & (img_gray < 144)]  = 140
+    img_gray[(144 < img_gray) & (img_gray < 148)]  = 144
+    img_gray[(148 < img_gray) & (img_gray < 152)]  = 148
+    img_gray[(152 < img_gray) & (img_gray < 156)]  = 152
+    img_gray[(156 < img_gray) & (img_gray < 160)]  = 156
+    img_gray[(160 < img_gray) & (img_gray < 164)]  = 160
+    img_gray[(164 < img_gray) & (img_gray < 168)]  = 164
+    img_gray[(168 < img_gray) & (img_gray < 172)]  = 168
+    img_gray[(172 < img_gray) & (img_gray < 176)]  = 172
+    img_gray[(176 < img_gray) & (img_gray < 180)]  = 176
+    img_gray[(180 < img_gray) & (img_gray < 184)]  = 180
+    img_gray[(184 < img_gray) & (img_gray < 186)]  = 184
+    img_gray[(186 < img_gray) & (img_gray < 190)]  = 186
+    img_gray[(190 < img_gray) & (img_gray < 194)]  = 190
+    img_gray[(194 < img_gray) & (img_gray < 200)]  = 194
+    img_gray[(200 < img_gray) & (img_gray < 204)]  = 200
+    img_gray[(204 < img_gray) & (img_gray < 208)]  = 204
+    img_gray[(208 < img_gray) & (img_gray < 212)]  = 208
+    img_gray[(212 < img_gray) & (img_gray < 216)]  = 212
+    img_gray[(216 < img_gray) & (img_gray < 220)]  = 216
+    img_gray[(220 < img_gray) & (img_gray < 224)]  = 220
+    img_gray[(224 < img_gray) & (img_gray < 228)]  = 224
+    img_gray[(228 < img_gray) & (img_gray < 232)]  = 228
+    img_gray[(232 < img_gray) & (img_gray < 236)]  = 232
+    img_gray[(236 < img_gray) & (img_gray < 240)]  = 236
+    img_gray[(240 < img_gray) & (img_gray < 244)]  = 240
+    img_gray[(244 < img_gray) & (img_gray < 248)]  = 244
+    img_gray[(248 < img_gray) & (img_gray < 252)]  = 248
+    img_gray[img_gray > 252]  = 255
+elif num_color == 128:
+    img_gray[img_gray < 2]  = 0
+    img_gray[(2 < img_gray) & (img_gray < 4)]  = 2
+    img_gray[(4 < img_gray) & (img_gray < 6)]  = 4
+    img_gray[(6 < img_gray) & (img_gray < 8)]  = 6
+    img_gray[(8 < img_gray) & (img_gray < 10)]  = 8
+    img_gray[(10 < img_gray) & (img_gray < 12)]  = 10
+    img_gray[(12 < img_gray) & (img_gray < 14)]  = 12
+    img_gray[(14 < img_gray) & (img_gray < 16)]  = 14
+    img_gray[(16 < img_gray) & (img_gray < 18)]  = 16
+    img_gray[(18 < img_gray) & (img_gray < 20)]  = 18
+    img_gray[(20 < img_gray) & (img_gray < 22)]  = 20
+    img_gray[(22 < img_gray) & (img_gray < 24)]  = 22
+    img_gray[(24 < img_gray) & (img_gray < 26)]  = 24
+    img_gray[(26 < img_gray) & (img_gray < 28)]  = 26
+    img_gray[(28 < img_gray) & (img_gray < 30)]  = 28
+    img_gray[(30 < img_gray) & (img_gray < 32)]  = 30
+    img_gray[(32 < img_gray) & (img_gray < 34)]  = 32
+    img_gray[(34 < img_gray) & (img_gray < 36)]  = 34
+    img_gray[(36 < img_gray) & (img_gray < 38)]  = 36
+    img_gray[(38 < img_gray) & (img_gray < 40)]  = 38
+    img_gray[(40 < img_gray) & (img_gray < 42)]  = 40
+    img_gray[(42 < img_gray) & (img_gray < 44)]  = 42
+    img_gray[(44 < img_gray) & (img_gray < 46)]  = 44
+    img_gray[(46 < img_gray) & (img_gray < 48)]  = 46
+    img_gray[(48 < img_gray) & (img_gray < 50)]  = 48
+    img_gray[(50 < img_gray) & (img_gray < 52)]  = 50
+    img_gray[(52 < img_gray) & (img_gray < 54)]  = 52
+    img_gray[(54 < img_gray) & (img_gray < 56)]  = 54
+    img_gray[(56 < img_gray) & (img_gray < 58)]  = 56
+    img_gray[(58 < img_gray) & (img_gray < 60)]  = 58
+    img_gray[(60 < img_gray) & (img_gray < 62)]  = 60
+    img_gray[(62 < img_gray) & (img_gray < 64)]  = 62
+    img_gray[(64 < img_gray) & (img_gray < 66)]  = 64
+    img_gray[(66 < img_gray) & (img_gray < 68)]  = 66
+    img_gray[(68 < img_gray) & (img_gray < 70)]  = 68
+    img_gray[(70 < img_gray) & (img_gray < 72)]  = 70
+    img_gray[(72 < img_gray) & (img_gray < 74)]  = 72
+    img_gray[(74 < img_gray) & (img_gray < 76)]  = 74
+    img_gray[(76 < img_gray) & (img_gray < 78)]  = 76
+    img_gray[(78 < img_gray) & (img_gray < 80)]  = 78
+    img_gray[(80 < img_gray) & (img_gray < 82)]  = 80
+    img_gray[(82 < img_gray) & (img_gray < 84)]  = 82
+    img_gray[(84 < img_gray) & (img_gray < 86)]  = 84
+    img_gray[(86 < img_gray) & (img_gray < 88)]  = 86
+    img_gray[(88 < img_gray) & (img_gray < 90)]  = 88
+    img_gray[(90 < img_gray) & (img_gray < 92)]  = 90
+    img_gray[(92 < img_gray) & (img_gray < 94)]  = 92
+    img_gray[(94 < img_gray) & (img_gray < 96)]  = 94
+    img_gray[(96 < img_gray) & (img_gray < 98)]  = 96
+    img_gray[(98 < img_gray) & (img_gray < 100)]  = 98
+    img_gray[(100 < img_gray) & (img_gray < 102)]  = 100
+    img_gray[(102 < img_gray) & (img_gray < 104)]  = 102
+    img_gray[(104 < img_gray) & (img_gray < 106)]  = 104
+    img_gray[(106 < img_gray) & (img_gray < 108)]  = 106
+    img_gray[(108 < img_gray) & (img_gray < 110)]  = 108
+    img_gray[(110 < img_gray) & (img_gray < 112)]  = 110
+    img_gray[(112 < img_gray) & (img_gray < 114)]  = 112
+    img_gray[(114 < img_gray) & (img_gray < 116)]  = 114
+    img_gray[(116 < img_gray) & (img_gray < 118)]  = 116
+    img_gray[(118 < img_gray) & (img_gray < 120)]  = 118
+    img_gray[(120 < img_gray) & (img_gray < 122)]  = 120
+    img_gray[(122 < img_gray) & (img_gray < 124)]  = 122
+    img_gray[(124 < img_gray) & (img_gray < 126)]  = 124
+    img_gray[(126 < img_gray) & (img_gray < 128)]  = 126
+    img_gray[(128 < img_gray) & (img_gray < 130)]  = 128
+    img_gray[(130 < img_gray) & (img_gray < 132)]  = 130
+    img_gray[(132 < img_gray) & (img_gray < 134)]  = 132
+    img_gray[(134 < img_gray) & (img_gray < 136)]  = 134
+    img_gray[(136 < img_gray) & (img_gray < 138)]  = 136
+    img_gray[(138 < img_gray) & (img_gray < 140)]  = 138
+    img_gray[(140 < img_gray) & (img_gray < 142)]  = 140
+    img_gray[(142 < img_gray) & (img_gray < 146)]  = 142
+    img_gray[(146 < img_gray) & (img_gray < 148)]  = 146
+    img_gray[(148 < img_gray) & (img_gray < 150)]  = 148
+    img_gray[(150 < img_gray) & (img_gray < 152)]  = 150
+    img_gray[(152 < img_gray) & (img_gray < 154)]  = 152
+    img_gray[(154 < img_gray) & (img_gray < 156)]  = 154
+    img_gray[(156 < img_gray) & (img_gray < 158)]  = 156
+    img_gray[(158 < img_gray) & (img_gray < 160)]  = 158
+    img_gray[(160 < img_gray) & (img_gray < 162)]  = 160
+    img_gray[(162 < img_gray) & (img_gray < 164)]  = 162
+    img_gray[(164 < img_gray) & (img_gray < 166)]  = 164
+    img_gray[(166 < img_gray) & (img_gray < 168)]  = 166
+    img_gray[(168 < img_gray) & (img_gray < 170)]  = 168
+    img_gray[(170 < img_gray) & (img_gray < 172)]  = 170
+    img_gray[(172 < img_gray) & (img_gray < 174)]  = 172
+    img_gray[(174 < img_gray) & (img_gray < 176)]  = 174
+    img_gray[(176 < img_gray) & (img_gray < 178)]  = 176
+    img_gray[(178 < img_gray) & (img_gray < 180)]  = 178
+    img_gray[(180 < img_gray) & (img_gray < 182)]  = 180
+    img_gray[(182 < img_gray) & (img_gray < 184)]  = 182
+    img_gray[(184 < img_gray) & (img_gray < 186)]  = 184
+    img_gray[(186 < img_gray) & (img_gray < 188)]  = 186
+    img_gray[(188 < img_gray) & (img_gray < 190)]  = 188
+    img_gray[(190 < img_gray) & (img_gray < 192)]  = 190
+    img_gray[(192 < img_gray) & (img_gray < 194)]  = 192
+    img_gray[(194 < img_gray) & (img_gray < 196)]  = 194
+    img_gray[(196 < img_gray) & (img_gray < 198)]  = 196
+    img_gray[(198 < img_gray) & (img_gray < 200)]  = 198
+    img_gray[(200 < img_gray) & (img_gray < 202)]  = 200
+    img_gray[(202 < img_gray) & (img_gray < 204)]  = 202
+    img_gray[(204 < img_gray) & (img_gray < 206)]  = 204
+    img_gray[(206 < img_gray) & (img_gray < 208)]  = 206
+    img_gray[(208 < img_gray) & (img_gray < 210)]  = 208
+    img_gray[(210 < img_gray) & (img_gray < 212)]  = 210
+    img_gray[(212 < img_gray) & (img_gray < 214)]  = 212
+    img_gray[(214 < img_gray) & (img_gray < 216)]  = 214
+    img_gray[(216 < img_gray) & (img_gray < 218)]  = 216
+    img_gray[(218 < img_gray) & (img_gray < 220)]  = 218
+    img_gray[(220 < img_gray) & (img_gray < 222)]  = 220
+    img_gray[(222 < img_gray) & (img_gray < 224)]  = 222
+    img_gray[(224 < img_gray) & (img_gray < 226)]  = 224
+    img_gray[(226 < img_gray) & (img_gray < 228)]  = 226
+    img_gray[(228 < img_gray) & (img_gray < 230)]  = 228
+    img_gray[(230 < img_gray) & (img_gray < 232)]  = 230
+    img_gray[(232 < img_gray) & (img_gray < 234)]  = 232
+    img_gray[(234 < img_gray) & (img_gray < 236)]  = 234
+    img_gray[(236 < img_gray) & (img_gray < 238)]  = 236
+    img_gray[(238 < img_gray) & (img_gray < 240)]  = 238
+    img_gray[(240 < img_gray) & (img_gray < 242)]  = 240
+    img_gray[(242 < img_gray) & (img_gray < 244)]  = 242
+    img_gray[(244 < img_gray) & (img_gray < 246)]  = 244
+    img_gray[(246 < img_gray) & (img_gray < 248)]  = 246
+    img_gray[(248 < img_gray) & (img_gray < 250)]  = 248
+    img_gray[(250 < img_gray) & (img_gray < 252)]  = 250
+    img_gray[(252 < img_gray) & (img_gray < 254)]  = 252
+    img_gray[(254 < img_gray) & (img_gray < 255)]  = 254
+    img_gray[img_gray >= 255]  = 255
 
 new_image = Image.fromarray(img_gray)
-plt.axis('off')
-st.text(img_gray.shape)
-plt.imshow(new_image)
-plt.show()
-st.pyplot()
+st.image([new_image.convert("L"), image], caption=['Cinza', 'colorida'], width=480,) 
 
-image1 = Image.open('unsplash.jpg')
+image1 = Image.open('monte_fuji.jpg')
 imagem_color_arr1 = np.array(image1)
 img_gray1 = np.mean(imagem_color_arr1, axis=2)
+st.text(img_gray.shape)
+img_gray1= np.mean(imagem_color_arr1, axis=2)
 
-img_gray1 = np.mean(imagem_color_arr1, axis=2)
-
-img_gray1[img_gray1 < limiar64] = 0
-img_gray1[(img_gray1 < limiar128).all() and (img_gray1 > limiar64).all()] = 64
-img_gray1[(img_gray1 < limiar192).all() and (img_gray1 > limiar128).all()] = 128
-img_gray1[img_gray1 > limiar192] = 192
-
-st.text(img_gray1.shape)
-
-# st.text ('limiar < ',limiar64,' -> 0')
-# st.text ('limiar < ',limiar128,'e limiar > ',limiar64,' ->','64')
-# st.text ('limiar < ',limiar192,'e limiar > ',limiar128, ' ->','128')
-# st.text ('limiar < ',limiar255, ' ->','192')
+if num_color == 2:
+    img_gray1[img_gray1 < 127]  = 0
+    img_gray1[img_gray1 >= 127]  = 255
+elif num_color == 4:
+    img_gray1[img_gray1 < 64]  = 0
+    img_gray1[(64 < img_gray1) & (img_gray1 < 128)]  = 64
+    img_gray1[(128 < img_gray1) & (img_gray1 < 192)]  = 128
+    img_gray1[img_gray1 > 192]  = 192
+elif num_color == 8:
+    img_gray1[img_gray1 < 32]  = 0
+    img_gray1[(32 < img_gray1) & (img_gray1 < 64)]  = 32
+    img_gray1[(64 < img_gray1) & (img_gray1 < 96)]  = 64
+    img_gray1[(96 < img_gray1) & (img_gray1 < 128)]  = 96
+    img_gray1[(128 < img_gray1) & (img_gray1 < 160)]  = 128
+    img_gray1[(160 < img_gray1) & (img_gray1 < 192)]  = 160
+    img_gray1[(192 < img_gray1) & (img_gray1 < 224)]  = 192
+    img_gray1[img_gray1 > 224] = 255
+elif num_color == 16:
+    img_gray1[img_gray1 < 16]  = 0
+    img_gray1[(16 < img_gray1) & (img_gray1 < 32)]  = 16
+    img_gray1[(32 < img_gray1) & (img_gray1 < 48)]  = 32
+    img_gray1[(48 < img_gray1) & (img_gray1 < 64)]  = 48
+    img_gray1[(64 < img_gray1) & (img_gray1 < 80)]  = 64
+    img_gray1[(80 < img_gray1) & (img_gray1 < 96)]  = 80
+    img_gray1[(96 < img_gray1) & (img_gray1 < 112)]  = 96
+    img_gray1[(112 < img_gray1) & (img_gray1 < 128)]  = 112
+    img_gray1[(128 < img_gray1) & (img_gray1 < 144)]  = 128
+    img_gray1[(144 < img_gray1) & (img_gray1 < 160)]  = 144
+    img_gray1[(160 < img_gray1) & (img_gray1 < 176)]  = 160
+    img_gray1[(176 < img_gray1) & (img_gray1 < 192)]  = 176
+    img_gray1[(192 < img_gray1) & (img_gray1 < 208)]  = 192
+    img_gray1[(208 < img_gray1) & (img_gray1 < 224)]  = 208
+    img_gray1[(224 < img_gray1) & (img_gray1 < 240)]  = 224
+    img_gray1[img_gray1 > 240]  = 255
+elif num_color == 32:
+    img_gray1[img_gray1 < 8]  = 0
+    img_gray1[(8 < img_gray1) & (img_gray1 < 16)]  = 8
+    img_gray1[(16 < img_gray1) & (img_gray1 < 24)]  = 16
+    img_gray1[(24 < img_gray1) & (img_gray1 < 32)]  = 24
+    img_gray1[(32 < img_gray1) & (img_gray1 < 40)]  = 32
+    img_gray1[(40 < img_gray1) & (img_gray1 < 48)]  = 40
+    img_gray1[(48 < img_gray1) & (img_gray1 < 56)]  = 48
+    img_gray1[(56 < img_gray1) & (img_gray1 < 64)]  = 56
+    img_gray1[(64 < img_gray1) & (img_gray1 < 72)]  = 64
+    img_gray1[(72 < img_gray1) & (img_gray1 < 80)]  = 72
+    img_gray1[(80 < img_gray1) & (img_gray1 < 88)]  = 80
+    img_gray1[(88 < img_gray1) & (img_gray1 < 96)]  = 88
+    img_gray1[(96 < img_gray1) & (img_gray1 < 104)]  = 96
+    img_gray1[(104 < img_gray1) & (img_gray1 < 112)]  = 104
+    img_gray1[(112 < img_gray1) & (img_gray1 < 120)]  = 112
+    img_gray1[(120 < img_gray1) & (img_gray1 < 128)]  = 120
+    img_gray1[(128 < img_gray1) & (img_gray1 < 136)]  = 128
+    img_gray1[(136 < img_gray1) & (img_gray1 < 142)]  = 136
+    img_gray1[(142 < img_gray1) & (img_gray1 < 150)]  = 142
+    img_gray1[(150 < img_gray1) & (img_gray1 < 158)]  = 150
+    img_gray1[(158 < img_gray1) & (img_gray1 < 164)]  = 158
+    img_gray1[(164 < img_gray1) & (img_gray1 < 172)]  = 164
+    img_gray1[(172 < img_gray1) & (img_gray1 < 180)]  = 172
+    img_gray1[(180 < img_gray1) & (img_gray1 < 188)]  = 180
+    img_gray1[(188 < img_gray1) & (img_gray1 < 196)]  = 188
+    img_gray1[(196 < img_gray1) & (img_gray1 < 204)]  = 196
+    img_gray1[(204 < img_gray1) & (img_gray1 < 212)]  = 204
+    img_gray1[(212 < img_gray1) & (img_gray1 < 220)]  = 212
+    img_gray1[(220 < img_gray1) & (img_gray1 < 228)]  = 220
+    img_gray1[(228 < img_gray1) & (img_gray1 < 236)]  = 228
+    img_gray1[(236 < img_gray1) & (img_gray1 < 244)]  = 236
+    img_gray1[img_gray1 > 244]  = 255
+elif num_color == 64:
+    img_gray1[img_gray1 < 8]  = 0
+    img_gray1[(4 < img_gray1) & (img_gray1 < 8)]  = 4
+    img_gray1[(8 < img_gray1) & (img_gray1 < 12)]  = 8
+    img_gray1[(12 < img_gray1) & (img_gray1 < 16)]  = 12
+    img_gray1[(16 < img_gray1) & (img_gray1 < 20)]  = 16
+    img_gray1[(20 < img_gray1) & (img_gray1 < 24)]  = 20
+    img_gray1[(24 < img_gray1) & (img_gray1 < 28)]  = 24
+    img_gray1[(28 < img_gray1) & (img_gray1 < 32)]  = 28
+    img_gray1[(32 < img_gray1) & (img_gray1 < 36)]  = 32
+    img_gray1[(36 < img_gray1) & (img_gray1 < 40)]  = 36
+    img_gray1[(40 < img_gray1) & (img_gray1 < 44)]  = 40
+    img_gray1[(44 < img_gray1) & (img_gray1 < 48)]  = 44
+    img_gray1[(48 < img_gray1) & (img_gray1 < 52)]  = 48
+    img_gray1[(52 < img_gray1) & (img_gray1 < 56)]  = 52
+    img_gray1[(56 < img_gray1) & (img_gray1 < 60)]  = 56
+    img_gray1[(60 < img_gray1) & (img_gray1 < 64)]  = 60
+    img_gray1[(64 < img_gray1) & (img_gray1 < 68)]  = 64
+    img_gray1[(68 < img_gray1) & (img_gray1 < 72)]  = 68
+    img_gray1[(72 < img_gray1) & (img_gray1 < 76)]  = 72
+    img_gray1[(76 < img_gray1) & (img_gray1 < 80)]  = 76
+    img_gray1[(80 < img_gray1) & (img_gray1 < 84)]  = 80
+    img_gray1[(84 < img_gray1) & (img_gray1 < 88)]  = 84
+    img_gray1[(88 < img_gray1) & (img_gray1 < 92)]  = 88
+    img_gray1[(92 < img_gray1) & (img_gray1 < 96)]  = 92
+    img_gray1[(96 < img_gray1) & (img_gray1 < 100)]  = 96
+    img_gray1[(100 < img_gray1) & (img_gray1 < 104)]  = 100
+    img_gray1[(104 < img_gray1) & (img_gray1 < 108)]  = 104
+    img_gray1[(108 < img_gray1) & (img_gray1 < 112)]  = 108
+    img_gray1[(112 < img_gray1) & (img_gray1 < 116)]  = 112
+    img_gray1[(116 < img_gray1) & (img_gray1 < 120)]  = 116
+    img_gray1[(120 < img_gray1) & (img_gray1 < 124)]  = 120
+    img_gray1[(124 < img_gray1) & (img_gray1 < 128)]  = 124
+    img_gray1[(128 < img_gray1) & (img_gray1 < 132)]  = 128
+    img_gray1[(132 < img_gray1) & (img_gray1 < 136)]  = 132
+    img_gray1[(136 < img_gray1) & (img_gray1 < 140)]  = 136
+    img_gray1[(140 < img_gray1) & (img_gray1 < 144)]  = 140
+    img_gray1[(144 < img_gray1) & (img_gray1 < 148)]  = 144
+    img_gray1[(148 < img_gray1) & (img_gray1 < 152)]  = 148
+    img_gray1[(152 < img_gray1) & (img_gray1 < 156)]  = 152
+    img_gray1[(156 < img_gray1) & (img_gray1 < 160)]  = 156
+    img_gray1[(160 < img_gray1) & (img_gray1 < 164)]  = 160
+    img_gray1[(164 < img_gray1) & (img_gray1 < 168)]  = 164
+    img_gray1[(168 < img_gray1) & (img_gray1 < 172)]  = 168
+    img_gray1[(172 < img_gray1) & (img_gray1 < 176)]  = 172
+    img_gray1[(176 < img_gray1) & (img_gray1 < 180)]  = 176
+    img_gray1[(180 < img_gray1) & (img_gray1 < 184)]  = 180
+    img_gray1[(184 < img_gray1) & (img_gray1 < 186)]  = 184
+    img_gray1[(186 < img_gray1) & (img_gray1 < 190)]  = 186
+    img_gray1[(190 < img_gray1) & (img_gray1 < 194)]  = 190
+    img_gray1[(194 < img_gray1) & (img_gray1 < 200)]  = 194
+    img_gray1[(200 < img_gray1) & (img_gray1 < 204)]  = 200
+    img_gray1[(204 < img_gray1) & (img_gray1 < 208)]  = 204
+    img_gray1[(208 < img_gray1) & (img_gray1 < 212)]  = 208
+    img_gray1[(212 < img_gray1) & (img_gray1 < 216)]  = 212
+    img_gray1[(216 < img_gray1) & (img_gray1 < 220)]  = 216
+    img_gray1[(220 < img_gray1) & (img_gray1 < 224)]  = 220
+    img_gray1[(224 < img_gray1) & (img_gray1 < 228)]  = 224
+    img_gray1[(228 < img_gray1) & (img_gray1 < 232)]  = 228
+    img_gray1[(232 < img_gray1) & (img_gray1 < 236)]  = 232
+    img_gray1[(236 < img_gray1) & (img_gray1 < 240)]  = 236
+    img_gray1[(240 < img_gray1) & (img_gray1 < 244)]  = 240
+    img_gray1[(244 < img_gray1) & (img_gray1 < 248)]  = 244
+    img_gray1[(248 < img_gray1) & (img_gray1 < 252)]  = 248
+    img_gray1[img_gray1 > 252]  = 255
+elif num_color == 128:
+    img_gray1[img_gray1 < 2]  = 0
+    img_gray1[(2 < img_gray1) & (img_gray1 < 4)]  = 2
+    img_gray1[(4 < img_gray1) & (img_gray1 < 6)]  = 4
+    img_gray1[(6 < img_gray1) & (img_gray1 < 8)]  = 6
+    img_gray1[(8 < img_gray1) & (img_gray1 < 10)]  = 8
+    img_gray1[(10 < img_gray1) & (img_gray1 < 12)]  = 10
+    img_gray1[(12 < img_gray1) & (img_gray1 < 14)]  = 12
+    img_gray1[(14 < img_gray1) & (img_gray1 < 16)]  = 14
+    img_gray1[(16 < img_gray1) & (img_gray1 < 18)]  = 16
+    img_gray1[(18 < img_gray1) & (img_gray1 < 20)]  = 18
+    img_gray1[(20 < img_gray1) & (img_gray1 < 22)]  = 20
+    img_gray1[(22 < img_gray1) & (img_gray1 < 24)]  = 22
+    img_gray1[(24 < img_gray1) & (img_gray1 < 26)]  = 24
+    img_gray1[(26 < img_gray1) & (img_gray1 < 28)]  = 26
+    img_gray1[(28 < img_gray1) & (img_gray1 < 30)]  = 28
+    img_gray1[(30 < img_gray1) & (img_gray1 < 32)]  = 30
+    img_gray1[(32 < img_gray1) & (img_gray1 < 34)]  = 32
+    img_gray1[(34 < img_gray1) & (img_gray1 < 36)]  = 34
+    img_gray1[(36 < img_gray1) & (img_gray1 < 38)]  = 36
+    img_gray1[(38 < img_gray1) & (img_gray1 < 40)]  = 38
+    img_gray1[(40 < img_gray1) & (img_gray1 < 42)]  = 40
+    img_gray1[(42 < img_gray1) & (img_gray1 < 44)]  = 42
+    img_gray1[(44 < img_gray1) & (img_gray1 < 46)]  = 44
+    img_gray1[(46 < img_gray1) & (img_gray1 < 48)]  = 46
+    img_gray1[(48 < img_gray1) & (img_gray1 < 50)]  = 48
+    img_gray1[(50 < img_gray1) & (img_gray1 < 52)]  = 50
+    img_gray1[(52 < img_gray1) & (img_gray1 < 54)]  = 52
+    img_gray1[(54 < img_gray1) & (img_gray1 < 56)]  = 54
+    img_gray1[(56 < img_gray1) & (img_gray1 < 58)]  = 56
+    img_gray1[(58 < img_gray1) & (img_gray1 < 60)]  = 58
+    img_gray1[(60 < img_gray1) & (img_gray1 < 62)]  = 60
+    img_gray1[(62 < img_gray1) & (img_gray1 < 64)]  = 62
+    img_gray1[(64 < img_gray1) & (img_gray1 < 66)]  = 64
+    img_gray1[(66 < img_gray1) & (img_gray1 < 68)]  = 66
+    img_gray1[(68 < img_gray1) & (img_gray1 < 70)]  = 68
+    img_gray1[(70 < img_gray1) & (img_gray1 < 72)]  = 70
+    img_gray1[(72 < img_gray1) & (img_gray1 < 74)]  = 72
+    img_gray1[(74 < img_gray1) & (img_gray1 < 76)]  = 74
+    img_gray1[(76 < img_gray1) & (img_gray1 < 78)]  = 76
+    img_gray1[(78 < img_gray1) & (img_gray1 < 80)]  = 78
+    img_gray1[(80 < img_gray1) & (img_gray1 < 82)]  = 80
+    img_gray1[(82 < img_gray1) & (img_gray1 < 84)]  = 82
+    img_gray1[(84 < img_gray1) & (img_gray1 < 86)]  = 84
+    img_gray1[(86 < img_gray1) & (img_gray1 < 88)]  = 86
+    img_gray1[(88 < img_gray1) & (img_gray1 < 90)]  = 88
+    img_gray1[(90 < img_gray1) & (img_gray1 < 92)]  = 90
+    img_gray1[(92 < img_gray1) & (img_gray1 < 94)]  = 92
+    img_gray1[(94 < img_gray1) & (img_gray1 < 96)]  = 94
+    img_gray1[(96 < img_gray1) & (img_gray1 < 98)]  = 96
+    img_gray1[(98 < img_gray1) & (img_gray1 < 100)]  = 98
+    img_gray1[(100 < img_gray1) & (img_gray1 < 102)]  = 100
+    img_gray1[(102 < img_gray1) & (img_gray1 < 104)]  = 102
+    img_gray1[(104 < img_gray1) & (img_gray1 < 106)]  = 104
+    img_gray1[(106 < img_gray1) & (img_gray1 < 108)]  = 106
+    img_gray1[(108 < img_gray1) & (img_gray1 < 110)]  = 108
+    img_gray1[(110 < img_gray1) & (img_gray1 < 112)]  = 110
+    img_gray1[(112 < img_gray1) & (img_gray1 < 114)]  = 112
+    img_gray1[(114 < img_gray1) & (img_gray1 < 116)]  = 114
+    img_gray1[(116 < img_gray1) & (img_gray1 < 118)]  = 116
+    img_gray1[(118 < img_gray1) & (img_gray1 < 120)]  = 118
+    img_gray1[(120 < img_gray1) & (img_gray1 < 122)]  = 120
+    img_gray1[(122 < img_gray1) & (img_gray1 < 124)]  = 122
+    img_gray1[(124 < img_gray1) & (img_gray1 < 126)]  = 124
+    img_gray1[(126 < img_gray1) & (img_gray1 < 128)]  = 126
+    img_gray1[(128 < img_gray1) & (img_gray1 < 130)]  = 128
+    img_gray1[(130 < img_gray1) & (img_gray1 < 132)]  = 130
+    img_gray1[(132 < img_gray1) & (img_gray1 < 134)]  = 132
+    img_gray1[(134 < img_gray1) & (img_gray1 < 136)]  = 134
+    img_gray1[(136 < img_gray1) & (img_gray1 < 138)]  = 136
+    img_gray1[(138 < img_gray1) & (img_gray1 < 140)]  = 138
+    img_gray1[(140 < img_gray1) & (img_gray1 < 142)]  = 140
+    img_gray1[(142 < img_gray1) & (img_gray1 < 146)]  = 142
+    img_gray1[(146 < img_gray1) & (img_gray1 < 148)]  = 146
+    img_gray1[(148 < img_gray1) & (img_gray1 < 150)]  = 148
+    img_gray1[(150 < img_gray1) & (img_gray1 < 152)]  = 150
+    img_gray1[(152 < img_gray1) & (img_gray1 < 154)]  = 152
+    img_gray1[(154 < img_gray1) & (img_gray1 < 156)]  = 154
+    img_gray1[(156 < img_gray1) & (img_gray1 < 158)]  = 156
+    img_gray1[(158 < img_gray1) & (img_gray1 < 160)]  = 158
+    img_gray1[(160 < img_gray1) & (img_gray1 < 162)]  = 160
+    img_gray1[(162 < img_gray1) & (img_gray1 < 164)]  = 162
+    img_gray1[(164 < img_gray1) & (img_gray1 < 166)]  = 164
+    img_gray1[(166 < img_gray1) & (img_gray1 < 168)]  = 166
+    img_gray1[(168 < img_gray1) & (img_gray1 < 170)]  = 168
+    img_gray1[(170 < img_gray1) & (img_gray1 < 172)]  = 170
+    img_gray1[(172 < img_gray1) & (img_gray1 < 174)]  = 172
+    img_gray1[(174 < img_gray1) & (img_gray1 < 176)]  = 174
+    img_gray1[(176 < img_gray1) & (img_gray1 < 178)]  = 176
+    img_gray1[(178 < img_gray1) & (img_gray1 < 180)]  = 178
+    img_gray1[(180 < img_gray1) & (img_gray1 < 182)]  = 180
+    img_gray1[(182 < img_gray1) & (img_gray1 < 184)]  = 182
+    img_gray1[(184 < img_gray1) & (img_gray1 < 186)]  = 184
+    img_gray1[(186 < img_gray1) & (img_gray1 < 188)]  = 186
+    img_gray1[(188 < img_gray1) & (img_gray1 < 190)]  = 188
+    img_gray1[(190 < img_gray1) & (img_gray1 < 192)]  = 190
+    img_gray1[(192 < img_gray1) & (img_gray1 < 194)]  = 192
+    img_gray1[(194 < img_gray1) & (img_gray1 < 196)]  = 194
+    img_gray1[(196 < img_gray1) & (img_gray1 < 198)]  = 196
+    img_gray1[(198 < img_gray1) & (img_gray1 < 200)]  = 198
+    img_gray1[(200 < img_gray1) & (img_gray1 < 202)]  = 200
+    img_gray1[(202 < img_gray1) & (img_gray1 < 204)]  = 202
+    img_gray1[(204 < img_gray1) & (img_gray1 < 206)]  = 204
+    img_gray1[(206 < img_gray1) & (img_gray1 < 208)]  = 206
+    img_gray1[(208 < img_gray1) & (img_gray1 < 210)]  = 208
+    img_gray1[(210 < img_gray1) & (img_gray1 < 212)]  = 210
+    img_gray1[(212 < img_gray1) & (img_gray1 < 214)]  = 212
+    img_gray1[(214 < img_gray1) & (img_gray1 < 216)]  = 214
+    img_gray1[(216 < img_gray1) & (img_gray1 < 218)]  = 216
+    img_gray1[(218 < img_gray1) & (img_gray1 < 220)]  = 218
+    img_gray1[(220 < img_gray1) & (img_gray1 < 222)]  = 220
+    img_gray1[(222 < img_gray1) & (img_gray1 < 224)]  = 222
+    img_gray1[(224 < img_gray1) & (img_gray1 < 226)]  = 224
+    img_gray1[(226 < img_gray1) & (img_gray1 < 228)]  = 226
+    img_gray1[(228 < img_gray1) & (img_gray1 < 230)]  = 228
+    img_gray1[(230 < img_gray1) & (img_gray1 < 232)]  = 230
+    img_gray1[(232 < img_gray1) & (img_gray1 < 234)]  = 232
+    img_gray1[(234 < img_gray1) & (img_gray1 < 236)]  = 234
+    img_gray1[(236 < img_gray1) & (img_gray1 < 238)]  = 236
+    img_gray1[(238 < img_gray1) & (img_gray1 < 240)]  = 238
+    img_gray1[(240 < img_gray1) & (img_gray1 < 242)]  = 240
+    img_gray1[(242 < img_gray1) & (img_gray1 < 244)]  = 242
+    img_gray1[(244 < img_gray1) & (img_gray1 < 246)]  = 244
+    img_gray1[(246 < img_gray1) & (img_gray1 < 248)]  = 246
+    img_gray1[(248 < img_gray1) & (img_gray1 < 250)]  = 248
+    img_gray1[(250 < img_gray1) & (img_gray1 < 252)]  = 250
+    img_gray1[(252 < img_gray1) & (img_gray1 < 254)]  = 252
+    img_gray1[(254 < img_gray1) & (img_gray1 < 255)]  = 254
+    img_gray1[img_gray1 >= 255]  = 255
 
 new_image1 = Image.fromarray(img_gray1)
-plt.axis('off')
-plt.imshow(new_image1)
-
-plt.show()
-st.pyplot()
+st.image([new_image1.convert("L"), image1], caption=['Cinza', 'colorida'], width=480,) 
